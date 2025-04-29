@@ -1,16 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentskeObevezeApp.MainPage">
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            x:Class="StudentskeObevezeApp.MainPage">
 
-    <StackLayout Padding="20">
-        <Label 
-        Text="Zdravo, testiram na telefonu!"
-        FontSize="24"
-        TextColor="DarkBlue"
-        HorizontalOptions="Center"
-        VerticalOptions="CenterAndExpand" />
-    </StackLayout>
+    <ContentPage Title="Dnevni zadaci">
+        <StackLayout>
+            <Label Text="Dnevni zadaci će se prikazivati ovde."
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage>
 
+    <ContentPage Title="Ispiti">
+        <StackLayout>
+            <Label Text="Spisak ispita ide ovde."
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage>
 
-</ContentPage>
+    <ContentPage Title="Beleške">
+        <StackLayout>
+            <Label Text="Beleške idu ovde."
+                   VerticalOptions="CenterAndExpand" 
+                   HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ContentPage>
+
+</TabbedPage>
