@@ -1,30 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:views="clr-namespace:StudentskeObevezeApp.Views"
             x:Class="StudentskeObevezeApp.MainPage">
 
-    <ContentPage Title="Dnevni zadaci">
-        <StackLayout>
-            <Label Text="Dnevni zadaci će se prikazivati ovde."
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage>
-
-    <ContentPage Title="Ispiti">
-        <StackLayout>
-            <Label Text="Spisak ispita ide ovde."
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage>
-
-    <ContentPage Title="Beleške">
-        <StackLayout>
-            <Label Text="Beleške idu ovde."
-                   VerticalOptions="CenterAndExpand" 
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage>
-
+    <views:DnevniZadaciPage Title="Dnevni zadaci" />
+    <views:IspitiPage Title="Ispiti" />
+    <views:BeleskePage Title="Beleške" />
+    <!-- Dodaj još dve stranice kada ih napraviš -->
 </TabbedPage>
