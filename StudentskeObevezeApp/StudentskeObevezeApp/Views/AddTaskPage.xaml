@@ -1,0 +1,25 @@
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StudentskeObevezeApp.Views.AddTaskPage"
+             Title="Dodaj/Izmeni zadatak">
+
+    <StackLayout Padding="20" Spacing="15">
+        <Entry x:Name="nazivEntry" Placeholder="Naziv zadatka" />
+        <Editor x:Name="opisEditor" Placeholder="Opis" HeightRequest="100"/>
+        <DatePicker x:Name="datumPicker" />
+        <Picker x:Name="prioritetPicker" Title="Prioritet">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Nizak</x:String>
+                    <x:String>Srednji</x:String>
+                    <x:String>Visok</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+            <Label Text="Podsetnik" VerticalOptions="Center" />
+            <Switch x:Name="podsetnikSwitch" />
+        </StackLayout>
+        <Button Text="Sačuvaj" Clicked="OnSaveTaskClicked"/>
+    </StackLayout>
+</ContentPage>

@@ -33,19 +33,18 @@ namespace StudentskeObevezeApp
 
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DbFileName);
 
-            // 🔴 Brisanje stare baze (SAMO ZA TESTIRANJE)
-            if (File.Exists(dbPath))
-            {
-                File.Delete(dbPath);
-                database = null;
-            }
+        
 
             var baza = Database;
 
-            // ✅ Dodaj testne zadatke
             Task.Run(async () =>
             {
-                var zadaci = new List<Models.Zadaci>
+                var postojeZadaci = await baza.GetItemsAsync();
+
+                // Dodajemo testne zadatke samo ako baza nije prazna
+                if (postojeZadaci.Count == 0)
+                {
+                    var zadaci = new List<Models.Zadaci>
         {
             new Models.Zadaci
             {
@@ -76,15 +75,19 @@ namespace StudentskeObevezeApp
             }
         };
 
-                foreach (var zad in zadaci)
-                {
-                    await baza.SaveItemAsync(zad);
+                    foreach (var zad in zadaci)
+                    {
+                        await baza.SaveItemAsync(zad);
+                    }
                 }
+            }).Wait();
 
-            }).Wait(); // čekamo da se ubace svi pre nego što se stranica prikaže
 
-            // 🔵 Prikaz glavne stranice
-            MainPage = new MainPage();
+
+
+            InitializeComponent();
+
+            MainPage = new NavigationPage(new MainPage()); // <- OVO je važno!
         }
     }
 }

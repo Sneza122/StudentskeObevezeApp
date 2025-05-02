@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StudentskeObevezeApp.Data
 {
-    public class Database // ← OVDE JE BILA PROMENA (umesto internal)
+    public class Database
     {
         readonly SQLiteAsyncConnection _database;
 
@@ -30,7 +30,14 @@ namespace StudentskeObevezeApp.Data
 
         public Task<int> DeleteItemAsync(Zadaci item)
         {
-            return _database.DeleteAsync(item);
+            return _database.DeleteAsync(item);  // Ovo je ispravna metoda
+
         }
+        public Task<int> DeleteAllItemsAsync()
+        {
+            return _database.DeleteAllAsync<Zadaci>();
+        }
+
+
     }
 }

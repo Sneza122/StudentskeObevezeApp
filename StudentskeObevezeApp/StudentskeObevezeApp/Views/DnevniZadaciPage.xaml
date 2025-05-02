@@ -1,15 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentskeObevezeApp.Views.DnevniZadaciPage"
-             Title="Dnevni zadaci">
-    
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              x:Class="StudentskeObevezeApp.Views.DnevniZadaciPage"
+              Title="Dnevni zadaci">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Dodaj +" Clicked="OnAddTaskClicked" />
+    </ContentPage.ToolbarItems>
+
+
+
 
     <StackLayout Padding="10">
         <Label Text="Moji dnevni zadaci" FontSize="Large" FontAttributes="Bold" TextColor="#C2185B" HorizontalOptions="Center" Margin="10"/>
 
+
+
         <CollectionView x:Name="zadaciListView"
-                SelectionMode="Single">
+                 SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Margin="5" Padding="10" BackgroundColor="Silver" CornerRadius="12" HasShadow="True">
@@ -18,9 +25,13 @@
                             <Label Text="{Binding Opis}" FontSize="Small" TextColor="Black"/>
                             <Label Text="{Binding Datum, StringFormat='📅 {0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Red" />
                             <Label Text="{Binding Prioritet, StringFormat='🎯 {0}'}" FontSize="Small" TextColor="Red"/>
+                          
                             <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                
                                 <Label Text="Završeno:" VerticalOptions="Center"/>
                                 <CheckBox IsChecked="{Binding Zavrsen, Mode=TwoWay}" />
+                                <Button Text="Izmeni" Clicked="OnEditTaskClicked" />
+                                <Button Text="Obriši" Clicked="OnDeleteTaskClicked" HorizontalOptions="End" />
                             </StackLayout>
                         </StackLayout>
                     </Frame>
