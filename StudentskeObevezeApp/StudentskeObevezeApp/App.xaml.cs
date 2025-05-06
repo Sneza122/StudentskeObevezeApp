@@ -30,6 +30,8 @@ namespace StudentskeObevezeApp
         {
             InitializeComponent();
 
+            MainPage = new MainPage();
+        }
 
             string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), DbFileName);
 
