@@ -6,7 +6,7 @@ namespace StudentskeObevezeApp.Views
     public partial class BeleskePage : ContentPage
     {
         private string poslednjaBeleška = "";
-
+         
         public BeleskePage()
         {
             InitializeComponent();
