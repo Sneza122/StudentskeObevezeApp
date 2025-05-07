@@ -1,12 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StudentskeObevezeApp.Views.IspitiPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="StudentskeObevezeApp.Views.IspitiPage"
+             Title="Ispiti">
+
+    <StackLayout Padding="10" Spacing="10">
+
+        <Entry x:Name="entryPredmet" Placeholder="Unesi predmet" />
+        <DatePicker x:Name="datePickerIspit" />
+        <Button Text="Dodaj ispit" Clicked="OnDodajIspitClicked" />
+
+        <ListView x:Name="ispitiListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Predmet}" Detail="{Binding DatumIspita}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </StackLayout>
 </ContentPage>
