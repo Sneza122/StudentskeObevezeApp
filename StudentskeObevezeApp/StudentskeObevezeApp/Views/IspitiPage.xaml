@@ -4,19 +4,43 @@
              x:Class="StudentskeObevezeApp.Views.IspitiPage"
              Title="Ispiti">
 
-    <StackLayout Padding="10" Spacing="10">
+    <!-- Naslov -->
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Ispiti" 
+               FontAttributes="Bold" 
+               FontSize="Large" 
+               TextColor="HotPink"
+               HorizontalOptions="Center" />
 
-        <Entry x:Name="entryPredmet" Placeholder="Unesi predmet" />
-        <DatePicker x:Name="datePickerIspit" />
-        <Button Text="Dodaj ispit" Clicked="OnDodajIspitClicked" />
-
-        <ListView x:Name="ispitiListView">
-            <ListView.ItemTemplate>
+        <!-- Lista ispita -->
+        <CollectionView x:Name="ispitiListView">
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Predmet}" Detail="{Binding DatumIspita}" />
+                    <Frame BackgroundColor="#fce4ec" Padding="10" CornerRadius="10" Margin="0,5">
+                        <StackLayout>
+                            <Label Text="{Binding Predmet}" FontAttributes="Bold" FontSize="Medium" />
+                            <Label Text="{Binding PrikazDatuma}" FontSize="Small" TextColor="Gray" />
+                        </StackLayout>
+                    </Frame>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
+        <!-- Dugme za dodavanje ispita -->
+        <Button Text="Dodaj ispit" 
+                Clicked="OnDodajIspitClicked" 
+                BackgroundColor="HotPink" 
+                TextColor="White" />
+
+        <!-- Forma za unos novog ispita, koja postaje vidljiva kada klikneš na dugme "Dodaj ispit" -->
+        <StackLayout x:Name="addIspitForm" IsVisible="False">
+            <Entry x:Name="entryPredmet" Placeholder="Unesi predmet" />
+            <DatePicker x:Name="datePickerIspit" />
+            <TimePicker x:Name="timePickerIspit" Time="09:00:00" />
+            <Button Text="Sačuvaj" 
+                    Clicked="OnSaveIspitClicked" 
+                    BackgroundColor="HotPink" 
+                    TextColor="White" />
+        </StackLayout>
     </StackLayout>
 </ContentPage>
