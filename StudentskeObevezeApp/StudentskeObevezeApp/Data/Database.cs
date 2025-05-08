@@ -13,6 +13,7 @@ namespace StudentskeObevezeApp.Data
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Zadaci>().Wait();  // Tvoja model klasa
+            _database.CreateTableAsync<Beleska>().Wait();
         }
 
         public Task<List<Zadaci>> GetItemsAsync()
@@ -36,6 +37,24 @@ namespace StudentskeObevezeApp.Data
         public Task<int> DeleteAllItemsAsync()
         {
             return _database.DeleteAllAsync<Zadaci>();
+        }
+
+        public Task<List<Beleska>> GetBeleskeAsync()
+        {
+            return _database.Table<Beleska>().OrderByDescending(b => b.Datum).ToListAsync();
+        }
+
+        public Task<int> SacuvajBeleskuAsync(Beleska beleska)
+        {
+            if (beleska.Id != 0)
+                return _database.UpdateAsync(beleska);
+            else
+                return _database.InsertAsync(beleska);
+        }
+
+        public Task<int> ObrisiBeleskuAsync(Beleska beleska)
+        {
+            return _database.DeleteAsync(beleska);
         }
 
 

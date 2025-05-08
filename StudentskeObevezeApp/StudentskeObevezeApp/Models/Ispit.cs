@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StudentskeObevezeApp.Models
 {
@@ -10,7 +8,14 @@ namespace StudentskeObevezeApp.Models
         public string Predmet { get; set; }
         public DateTime DatumIspita { get; set; }
         public bool AlarmPostavljen { get; set; }
+        public bool IspitZavrsen { get; set; }
 
-        public string PrikazDatuma => DatumIspita.ToString("dd.MM.yyyy. HH:mm");
+        public string PrikazDatuma
+        {
+            get
+            {
+                return DatumIspita.ToString("dd.MM.yyyy. HH:mm");
+            }
+        }
     }
 }

@@ -4,43 +4,47 @@
              x:Class="StudentskeObevezeApp.Views.IspitiPage"
              Title="Ispiti">
 
-    <!-- Naslov -->
     <StackLayout Padding="20" Spacing="15">
-        <Label Text="Ispiti" 
-               FontAttributes="Bold" 
-               FontSize="Large" 
+
+        <Label Text="Ispiti"
+               FontAttributes="Bold"
+               FontSize="Large"
                TextColor="HotPink"
                HorizontalOptions="Center" />
 
-        <!-- Lista ispita -->
         <CollectionView x:Name="ispitiListView">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BackgroundColor="#fce4ec" Padding="10" CornerRadius="10" Margin="0,5">
                         <StackLayout>
-                            <Label Text="{Binding Predmet}" FontAttributes="Bold" FontSize="Medium" />
-                            <Label Text="{Binding PrikazDatuma}" FontSize="Small" TextColor="Gray" />
+                            <Label Text="{Binding Predmet}"
+                                   FontAttributes="Bold"
+                                   FontSize="Medium"
+                                   TextColor="Black" />
+                            <Label Text="{Binding DatumIspita, StringFormat='{0:dd.MM.yyyy. HH:mm}'}"
+                                   FontSize="Small"
+                                   TextColor="Gray" />
                         </StackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- Dugme za dodavanje ispita -->
-        <Button Text="Dodaj ispit" 
-                Clicked="OnDodajIspitClicked" 
-                BackgroundColor="HotPink" 
+        <Button x:Name="btnDodajIspit"
+                Text="Dodaj ispit"
+                Clicked="OnDodajIspitClicked"
+                BackgroundColor="HotPink"
                 TextColor="White" />
 
-        <!-- Forma za unos novog ispita, koja postaje vidljiva kada klikneš na dugme "Dodaj ispit" -->
         <StackLayout x:Name="addIspitForm" IsVisible="False">
             <Entry x:Name="entryPredmet" Placeholder="Unesi predmet" />
             <DatePicker x:Name="datePickerIspit" />
             <TimePicker x:Name="timePickerIspit" Time="09:00:00" />
-            <Button Text="Sačuvaj" 
-                    Clicked="OnSaveIspitClicked" 
-                    BackgroundColor="HotPink" 
+            <Button Text="Sačuvaj"
+                    Clicked="OnSaveIspitClicked"
+                    BackgroundColor="HotPink"
                     TextColor="White" />
         </StackLayout>
+
     </StackLayout>
 </ContentPage>

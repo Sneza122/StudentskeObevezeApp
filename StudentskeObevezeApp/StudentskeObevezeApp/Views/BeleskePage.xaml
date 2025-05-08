@@ -6,78 +6,42 @@
              BackgroundColor="White">
 
     <StackLayout Padding="20" Spacing="15">
+        <Label Text="Beleške" FontSize="24" FontAttributes="Bold"
+               TextColor="HotPink" HorizontalOptions="Center" />
 
-        <!-- Naslov -->
-        <Label Text="Beleške"
-               FontSize="24"
-               FontAttributes="Bold"
-               TextColor="HotPink"
-               HorizontalOptions="Center" />
-
-        <!-- Prikaz svih beleški -->
         <CollectionView x:Name="beleškeList">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Spacing="2">
-
-                        <!-- Roze okvir -->
                         <Frame BackgroundColor="#fce4ec" CornerRadius="10" Padding="10" Margin="0,5">
                             <StackLayout>
-
-                                <!-- Tekst beleške -->
                                 <Label Text="{Binding Tekst}" FontSize="16" TextColor="Black" />
 
-                                <!-- Dugmad za izmenu i brisanje -->
                                 <StackLayout Orientation="Horizontal" HorizontalOptions="End" Spacing="10">
-                                    <Button Text="Izmeni"
-                                            BackgroundColor="HotPink"
-                                            TextColor="White"
-                                            FontSize="12"
-                                            Padding="5"
-                                            HeightRequest="30"
-                                            WidthRequest="70"
-                                            Clicked="OnUrediClicked"
-                                            BindingContext="{Binding .}" />
-                                    <Button Text="Obriši"
-                                            BackgroundColor="HotPink"
-                                            TextColor="White"
-                                            FontSize="12"
-                                            Padding="5"
-                                            HeightRequest="30"
-                                            WidthRequest="70"
-                                            Clicked="OnObrisiClicked"
-                                            BindingContext="{Binding .}" />
+                                    <Button Text="Izmeni" BackgroundColor="HotPink" TextColor="White"
+                                            FontSize="12" Padding="5" HeightRequest="30" WidthRequest="70"
+                                            Clicked="OnUrediClicked" BindingContext="{Binding .}" />
+                                    <Button Text="Obriši" BackgroundColor="HotPink" TextColor="White"
+                                            FontSize="12" Padding="5" HeightRequest="30" WidthRequest="70"
+                                            Clicked="OnObrisiClicked" BindingContext="{Binding .}" />
                                 </StackLayout>
-
                             </StackLayout>
                         </Frame>
 
-                        <!-- Datum ispod okvira -->
                         <Label Text="{Binding Datum, StringFormat='{0:dd.MM.yyyy. HH:mm}'}"
-                               FontSize="12"
-                               TextColor="DarkGray"
-                               HorizontalOptions="End"
-                               Margin="0,0,5,10" />
+                               FontSize="12" TextColor="DarkGray"
+                               HorizontalOptions="End" Margin="0,0,5,10" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- Unos nove beleške -->
         <StackLayout x:Name="unosStack" IsVisible="False">
             <Editor x:Name="noviUnosEditor" Placeholder="Unesi novu belešku..." HeightRequest="100"/>
-            <Button Text="Sačuvaj"
-                    BackgroundColor="HotPink"
-                    TextColor="White"
-                    Clicked="OnSacuvajNovuClicked"/>
+            <Button Text="Sačuvaj" BackgroundColor="HotPink" TextColor="White" Clicked="OnSacuvajNovuClicked"/>
         </StackLayout>
 
-        <!-- Dugme za dodavanje -->
-        <Button x:Name="btnDodaj"
-                Text="Dodaj belešku"
-                BackgroundColor="HotPink"
-                TextColor="White"
-                Clicked="OnDodajClicked"/>
-
+        <Button x:Name="btnDodaj" Text="Dodaj belešku" BackgroundColor="HotPink"
+                TextColor="White" Clicked="OnDodajClicked"/>
     </StackLayout>
 </ContentPage>

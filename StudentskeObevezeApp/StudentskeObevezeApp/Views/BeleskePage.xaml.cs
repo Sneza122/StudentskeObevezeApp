@@ -1,71 +1,49 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 using StudentskeObevezeApp.Models;
+using StudentskeObevezeApp.Data;
+using System.Threading.Tasks;
 
 namespace StudentskeObevezeApp.Views
 {
     public partial class BeleskePage : ContentPage
     {
         private ObservableCollection<Beleska> listaBeleski = new ObservableCollection<Beleska>();
-        private readonly string fajlPutanja = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "beleske.json"
-        );
 
         public BeleskePage()
         {
             InitializeComponent();
-            UcitajBeleske(); // prvo učitamo podatke
-            beleškeList.ItemsSource = listaBeleski; // zatim vežemo listu
+            BindingContext = this;
+            _ = UcitajBeleske();
+            beleškeList.ItemsSource = listaBeleski;
         }
 
-        private void UcitajBeleske()
+        private async Task UcitajBeleske()
         {
-            if (File.Exists(fajlPutanja))
+            listaBeleski.Clear();
+            var sveBeleske = await App.Database.GetBeleskeAsync();
+
+            if (sveBeleske.Count == 0)
             {
-                var json = File.ReadAllText(fajlPutanja);
-                var ucitane = JsonConvert.DeserializeObject<ObservableCollection<Beleska>>(json);
-                if (ucitane != null)
+                var pocetne = new[]
                 {
-                    listaBeleski.Clear();
-                    foreach (var beleska in ucitane)
-                    {
-                        listaBeleski.Add(beleska);
-                    }
+                    new Beleska { Tekst = "Završiti projekat iz Microsoft tehnologija za pristup podacima.", Datum = new DateTime(2025, 5, 4, 17, 30, 0) },
+                    new Beleska { Tekst = "Napraviti projekat iz USI-a.", Datum = new DateTime(2025, 5, 5, 13, 15, 0) },
+                    new Beleska { Tekst = "Preći teoriju iz IRAC-a.", Datum = new DateTime(2025, 5, 6, 9, 0, 0) }
+                };
+
+                foreach (var beleska in pocetne)
+                {
+                    await App.Database.SacuvajBeleskuAsync(beleska);
+                    listaBeleski.Add(beleska);
                 }
             }
             else
             {
-                // Dodajemo unapred definisane beleške
-                listaBeleski.Insert(0, new Beleska
-                {
-                    Tekst = "Završiti projekat iz Microsoft tehnologija za pristup podacima.",
-                    Datum = new DateTime(2025, 5, 4, 17, 30, 0)
-                });
-
-                listaBeleski.Insert(0, new Beleska
-                {
-                    Tekst = "Napraviti projekat iz USI-a.",
-                    Datum = new DateTime(2025, 5, 5, 13, 15, 0)
-                });
-
-                listaBeleski.Insert(0, new Beleska
-                {
-                    Tekst = "Preći teoriju iz IRAC-a.",
-                    Datum = new DateTime(2025, 5, 6, 9, 0, 0)
-                });
-
-                SacuvajBeleske();
+                foreach (var beleska in sveBeleske)
+                    listaBeleski.Add(beleska);
             }
-        }
-
-        private void SacuvajBeleske()
-        {
-            var json = JsonConvert.SerializeObject(listaBeleski);
-            File.WriteAllText(fajlPutanja, json);
         }
 
         private void OnDodajClicked(object sender, EventArgs e)
@@ -74,7 +52,7 @@ namespace StudentskeObevezeApp.Views
             btnDodaj.IsVisible = false;
         }
 
-        private void OnSacuvajNovuClicked(object sender, EventArgs e)
+        private async void OnSacuvajNovuClicked(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(noviUnosEditor.Text))
             {
@@ -84,16 +62,16 @@ namespace StudentskeObevezeApp.Views
                     Datum = DateTime.Now
                 };
 
+                await App.Database.SacuvajBeleskuAsync(novaBeleska);
                 listaBeleski.Insert(0, novaBeleska);
+
                 noviUnosEditor.Text = string.Empty;
                 unosStack.IsVisible = false;
                 btnDodaj.IsVisible = true;
-
-                SacuvajBeleske();
             }
             else
             {
-                DisplayAlert("Greška", "Unos ne može biti prazan.", "OK");
+                await DisplayAlert("Greška", "Unos ne može biti prazan.", "OK");
             }
         }
 
@@ -104,13 +82,11 @@ namespace StudentskeObevezeApp.Views
 
             if (beleska != null)
             {
-                // Prikazujemo dijalog za potvrdu
-                bool odgovor = await DisplayAlert("Potvrda", "Da li ste sigurni da želite da obrišete ovu belešku?", "Da", "Ne");
-
-                if (odgovor)
+                bool potvrda = await DisplayAlert("Potvrda", "Da li ste sigurni da želite da obrišete ovu belešku?", "Da", "Ne");
+                if (potvrda)
                 {
+                    await App.Database.ObrisiBeleskuAsync(beleska);
                     listaBeleski.Remove(beleska);
-                    SacuvajBeleske();
                 }
             }
         }
@@ -122,17 +98,19 @@ namespace StudentskeObevezeApp.Views
 
             if (beleska != null)
             {
-                // Unos novog teksta
                 string noviTekst = await DisplayPromptAsync("Izmeni belešku", "Izmeni tekst:", initialValue: beleska.Tekst);
                 if (!string.IsNullOrWhiteSpace(noviTekst))
                 {
                     beleska.Tekst = noviTekst;
-                    beleska.Datum = DateTime.Now; // Ažuriramo datum kada je izmena izvršena
-                    SacuvajBeleske();
+                    beleska.Datum = DateTime.Now;
+                    await App.Database.SacuvajBeleskuAsync(beleska);
 
-                    // Osvežavanje prikaza
-                    beleškeList.ItemsSource = null;
-                    beleškeList.ItemsSource = listaBeleski;
+                    var index = listaBeleski.IndexOf(beleska);
+                    if (index >= 0)
+                    {
+                        listaBeleski.RemoveAt(index);
+                        listaBeleski.Insert(index, beleska);
+                    }
                 }
             }
         }
