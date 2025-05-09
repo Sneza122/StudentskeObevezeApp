@@ -14,6 +14,7 @@ namespace StudentskeObevezeApp.Data
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Zadaci>().Wait();  // Tvoja model klasa
             _database.CreateTableAsync<Beleska>().Wait();
+            _database.CreateTableAsync<Ispit>().Wait();
         }
 
         public Task<List<Zadaci>> GetItemsAsync()
@@ -55,6 +56,24 @@ namespace StudentskeObevezeApp.Data
         public Task<int> ObrisiBeleskuAsync(Beleska beleska)
         {
             return _database.DeleteAsync(beleska);
+        }
+
+        public Task<List<Ispit>> GetIspitiAsync()
+        {
+            return _database.Table<Ispit>().OrderByDescending(i => i.DatumIspita).ToListAsync();
+        }
+
+        public Task<int> SacuvajIspitAsync(Ispit ispit)
+        {
+            if (ispit.Id != 0)
+                return _database.UpdateAsync(ispit);
+            else
+                return _database.InsertAsync(ispit);
+        }
+
+        public Task<int> ObrisiIspitAsync(Ispit ispit)
+        {
+            return _database.DeleteAsync(ispit);
         }
 
 
