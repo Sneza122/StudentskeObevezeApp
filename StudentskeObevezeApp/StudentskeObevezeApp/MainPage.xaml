@@ -2,7 +2,9 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:views="clr-namespace:StudentskeObevezeApp.Views"
-            x:Class="StudentskeObevezeApp.MainPage">
+            x:Class="StudentskeObevezeApp.MainPage"
+            BarBackgroundColor="#E91E63"
+            BarTextColor="White">
 
     <views:DnevniZadaciPage Title="Dnevni zadaci" />
     <views:IspitiPage Title="Ispiti" />

@@ -3,15 +3,14 @@
               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               x:Class="StudentskeObevezeApp.Views.DnevniZadaciPage"
               Title="Dnevni zadaci">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Dodaj +" Clicked="OnAddTaskClicked" />
-    </ContentPage.ToolbarItems>
+
 
 
 
 
     <StackLayout Padding="10">
         <Label Text="Moji dnevni zadaci" FontSize="Large" FontAttributes="Bold" TextColor="#C2185B" HorizontalOptions="Center" Margin="10"/>
+        <Button Text="Dodaj novi zadatak" Clicked="OnAddTaskClicked" BackgroundColor="#E91E63" TextColor="White" CornerRadius="10" Margin="0,0,0,10"/>
 
 
 
